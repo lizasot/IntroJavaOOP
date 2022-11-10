@@ -1,5 +1,6 @@
+package lesson1and2;
+
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class People implements CloseRelative{
     private String Name;

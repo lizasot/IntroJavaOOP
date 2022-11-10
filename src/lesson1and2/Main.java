@@ -1,3 +1,5 @@
+package lesson1and2;
+
 public class Main {
     public static void main(String[] args) {
         People core = new People("Anya", true);
