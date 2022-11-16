@@ -29,13 +29,12 @@ public class Main {
         }
     }
     public static void main(String[] args) {
-        MyCollection<People> test = new MyCollection<>();
+        MyCollection<People> test = new MyCollection<People>();
         test.add(new People("Anya", true));
         test.add(new People("Marya", true));
         test.get(0).addParent(test.get(1));
-        for (Object item:test) {
-            System.out.println(item);
+        for (People item:test) {
+            System.out.println(item.getFullInfo());
         }
-        System.out.println(test.size());
     }
 }
