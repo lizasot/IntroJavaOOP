@@ -3,8 +3,8 @@ package lesson3;
 import java.util.*;
 import java.util.function.Consumer;
 
-public class MyCollection<E> implements Collection {
-    private Object[] elementData;
+public class MyCollection<E> implements Collection<E> {
+    private E[] elementData;
     private int size;
     @Override
     public int size() {
@@ -42,7 +42,7 @@ public class MyCollection<E> implements Collection {
         return (E) elementData[ind];
     }
 
-    public boolean set(int ind, Object o) {
+    public boolean set(int ind, E o) {
         if (ind < size) {
             elementData[ind] = o;
             return true;
@@ -61,24 +61,24 @@ public class MyCollection<E> implements Collection {
     }
 
     @Override
-    public Object[] toArray(Object[] a) {
+    public E[] toArray(Object[] a) {
         if (a.length < size)
-            return (Object[]) Arrays.copyOf(elementData, size, a.getClass());
+            return (E[]) Arrays.copyOf(elementData, size, a.getClass());
         System.arraycopy(elementData, 0, a, 0, size);
         if (a.length > size)
             a[size] = null;
-        return a;
+        return (E[]) a;
     }
 
-    private Object[] grow(int minCapacity) {
+    private E[] grow(int minCapacity) {
         return elementData = Arrays.copyOf(elementData, minCapacity);
     }
 
-    private Object[] grow() {
+    private E[] grow() {
         return grow(size + 1);
     }
 
-    private void add(Object e, Object[] elementData, int s) {
+    private void add(E e, E[] elementData, int s) {
         if (s == elementData.length)
             elementData = grow();
         elementData[s] = e;
@@ -86,7 +86,7 @@ public class MyCollection<E> implements Collection {
     }
 
     @Override
-    public boolean add(Object o) {
+    public boolean add(E o) {
         add(o, elementData, size);
         return true;
     }
@@ -136,7 +136,7 @@ public class MyCollection<E> implements Collection {
 
     @Override
     public void clear() {
-        final Object[] es = elementData;
+        Object[] es = elementData;
         for (int to = size, i = size = 0; i < to; i++)
             es[i] = null;
     }
@@ -220,7 +220,7 @@ public class MyCollection<E> implements Collection {
             int i = cursor;
             if (i >= size)
                 throw new NoSuchElementException();
-            Object[] elementData = MyCollection.this.elementData;
+            E[] elementData = MyCollection.this.elementData;
             if (i >= elementData.length)
                 throw new ConcurrentModificationException();
             cursor = i + 1;
@@ -233,16 +233,15 @@ public class MyCollection<E> implements Collection {
             final int size = MyCollection.this.size;
             int i = cursor;
             if (i < size) {
-                final Object[] es = elementData;
+                final E[] es = elementData;
                 if (i >= es.length)
                     throw new ConcurrentModificationException();
-                cursor = i;
                 lastRet = i - 1;
             }
         }
     }
 
-    static <E> E elementAt(Object[] es, int index) {
+    static <E> E elementAt(E[] es, int index) {
         return (E) es[index];
     }
 
@@ -259,28 +258,28 @@ public class MyCollection<E> implements Collection {
     private static Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {};
     public MyCollection(int initialCapacity) {
         if (initialCapacity > 0) {
-            this.elementData = new Object[initialCapacity];
+            this.elementData =(E[]) (new Object[initialCapacity]);
         } else if (initialCapacity == 0) {
-            this.elementData = EMPTY_ELEMENTDATA;
+            this.elementData = (E[]) EMPTY_ELEMENTDATA;
         } else {
             throw new IllegalArgumentException("Illegal Capacity: "+
                     initialCapacity);
         }
     }
     public MyCollection() {
-        this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
+        this.elementData = (E[]) DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
     }
     public MyCollection(Collection<? extends E> c) {
         Object[] a = c.toArray();
         if ((size = a.length) != 0) {
             if (c.getClass() == ArrayList.class) {
-                elementData = a;
+                elementData = (E[]) a;
             } else {
-                elementData = Arrays.copyOf(a, size, Object[].class);
+                elementData =(E[]) (Arrays.copyOf(a, size, Object[].class));
             }
         } else {
             // replace with empty array.
-            elementData = EMPTY_ELEMENTDATA;
+            elementData = (E[]) EMPTY_ELEMENTDATA;
         }
     }
 }
