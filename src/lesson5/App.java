@@ -1,14 +1,13 @@
 package lesson5;
 
-import lesson5.Models.Model;
-import lesson5.Presenters.Presenter;
+import lesson5.Models.DataKeeper;
+import lesson5.Presenters.LoginPresenter;
 import lesson5.Views.ConsoleView;
-import lesson5.Views.IView;
 
 public class App {
-    Presenter Presenter;
+    LoginPresenter loginPresenter;
 
-    public void Run() {
+    public void run() {
         StringBuilder menu = new StringBuilder();
         menu.append("\n====================\n");
         menu.append("[1] Авторизация\n");
@@ -17,13 +16,13 @@ public class App {
         menu.append("[0] Выход\n");
         int choice;
         while (true) {
-            choice = Presenter.getChoice(menu.toString());
+            choice = loginPresenter.getChoice(menu.toString());
             if (choice == 1) {
-                Presenter.Authorize();
+                loginPresenter.authorize();
             } else if (choice == 2) {
-                Presenter.SignUp();
+                loginPresenter.signUp();
             } else if (choice == 3) {
-                Presenter.PrintUserList();
+                loginPresenter.printUserList();
             } else if (choice == 0) {
                 break;
             }
@@ -31,6 +30,6 @@ public class App {
     }
 
     public App() {
-        Presenter = new Presenter(new Model(), new ConsoleView());
+        loginPresenter = new LoginPresenter(new DataKeeper(), new ConsoleView());
     }
 }
